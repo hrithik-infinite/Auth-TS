@@ -3,7 +3,7 @@ import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
 import { getUserById } from "./data/user";
-import { User, UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
