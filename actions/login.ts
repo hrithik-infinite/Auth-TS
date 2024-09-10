@@ -1,7 +1,8 @@
 "use server";
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/data/user";
-// import { generateVerificationToken } from "@/lib/token";
+import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/token";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
@@ -17,10 +18,11 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!isExisiting || !isExisiting.email || !isExisiting.password) {
     return { error: "Email does not exist!" };
   }
-  // if (!isExisiting.emailVerified) {
-  //   const token = await generateVerificationToken(isExisiting.email);
-  //   return { success: "Confirmation email sent" };
-  // }
+  if (!isExisiting.emailVerified) {
+    const verificationToken = await generateVerificationToken(isExisiting.email);
+    await sendVerificationEmail("hrithikinfinite@gmail.com", verificationToken.token, isExisiting?.name ? isExisiting?.name : "");
+    return { success: "Confirmation email sent" };
+  }
   try {
     await signIn("credentials", {
       email,
