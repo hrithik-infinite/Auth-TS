@@ -18,6 +18,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
     console.log(`Login Success for ${email}`);
+    return { success: "Login Successful" };
   } catch (error) {
     console.log(`Error while signing in :${JSON.stringify(error)}`);
     if (error instanceof AuthError) {
