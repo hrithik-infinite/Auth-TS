@@ -100,3 +100,102 @@ export const sendVerificationEmail = async (email: string, token: string, name: 
     `,
   });
 };
+
+export const sendResetLinkEmail = async (email: string, token: string, name: string | null) => {
+  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  await resend.emails.send({
+    from: "Auth TS <support@resend.dev>",
+    to: email,
+    subject: "Reset Your Password - Auth TS",
+    html: `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Your Password</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #e74c3c;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #7f8c8d;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background-color: #e74c3c;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      margin: 20px 0;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #c0392b;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #bdc3c7;
+    }
+    .footer p {
+      margin: 5px 0;
+    }
+    .footer a {
+      color: #e74c3c;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email-container">
+    <h1>Password Reset Request</h1>
+    <p>Hi ${name},</p>
+    <p>It seems like you requested a password reset for your Auth TS account. Click the button below to reset your password:</p>
+
+    <p>
+      <a href="${resetLink}" class="btn">Reset My Password</a>
+    </p>
+
+    <p>If you didn’t request a password reset, you can ignore this email. Your password will remain unchanged.</p>
+
+    <div class="footer">
+      <p>&copy; 2024 Auth TS. All rights reserved.</p>
+      <p>Developed by <strong>Hrithik Agarwal</strong>.</p>
+      <p>Connect with me:</p>
+      <p>
+        <a href="https://linkedin.com/in/hrithikagarwal" target="_blank">LinkedIn</a> |
+        <a href="https://github.com/hrithik-infinite" target="_blank">GitHub</a>
+      </p>
+      <p>If you have any questions, feel free to <a href="mailto:hrithikinfinite@gmail.com" style="color:#e74c3c; text-decoration:none;">contact us</a>.</p>
+    </div>
+  </div>
+
+</body>
+</html>
+    `,
+  });
+};
