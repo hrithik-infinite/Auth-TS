@@ -1,5 +1,7 @@
 "use server";
 import { getUserByEmail } from "@/data/user";
+import { sendResetLinkEmail } from "@/lib/mail";
+import { generatePasswordResetToken } from "@/lib/token";
 import { ResetSchema } from "@/schemas";
 import * as z from "zod";
 
@@ -14,6 +16,7 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
     return { error: "Email not found!" };
   }
   //TODO : Send email and generate token
-
+  const token = await generatePasswordResetToken(email);
+  await sendResetLinkEmail("hrithikinfinite@gmail.com", token.token, exitingUser?.name);
   return { success: "Reset email sent!" };
 };
