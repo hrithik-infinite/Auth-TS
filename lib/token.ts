@@ -5,7 +5,7 @@ import { getPasswordResetTokenByEmail } from "@/data/password-reset-token";
 import crypto from "crypto";
 import { get2faTokenbyEmail } from "@/data/2fa-token";
 
-export const generatefaToken = async (email: string) => {
+export const generate2faToken = async (email: string) => {
   const token = crypto.randomInt(100000, 1000000);
   const expires = new Date(new Date().getTime() + 3600 * 1000);
   const isExisting = await get2faTokenbyEmail(email);
