@@ -200,7 +200,8 @@ export const sendResetLinkEmail = async (email: string, token: string, name: str
   });
 };
 
-export const send2faEmail = async (email: string, token: string, name: string) => {
+export const send2faEmail = async (email: string, token: string, name: string | null) => {
+  
   await resend.emails.send({
     from: "Auth TS <security@resend.dev>",
     to: email,
