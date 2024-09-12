@@ -199,3 +199,95 @@ export const sendResetLinkEmail = async (email: string, token: string, name: str
     `,
   });
 };
+
+export const send2faEmail = async (email: string, token: string, name: string) => {
+  await resend.emails.send({
+    from: "Auth TS <security@resend.dev>",
+    to: email,
+    subject: "Your Auth TS OTP Code",
+    html: `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your OTP Code</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #7f8c8d;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .otp-code {
+      font-size: 28px;
+      font-weight: bold;
+      color: #3498db;
+      margin: 20px 0;
+      padding: 10px;
+      border: 2px dashed #3498db;
+      display: inline-block;
+      letter-spacing: 5px;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #bdc3c7;
+    }
+    .footer p {
+      margin: 5px 0;
+    }
+    .footer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email-container">
+    <h1>Your Auth TS OTP Code</h1>
+    <p>Hi ${name},</p>
+    <p>To complete your login or verification, please use the following One-Time Password (OTP):</p>
+
+    <p class="otp-code">${token}</p>
+
+    <p>This code will expire in 10 minutes. Please make sure to enter it promptly to secure your account.</p>
+
+    <p>If you did not request this OTP, please ignore this email or <a href="mailto:security@auth-ts.com" style="color:#3498db; text-decoration:none;">contact us</a> immediately.</p>
+
+    <div class="footer">
+      <p>&copy; 2024 Auth TS. All rights reserved.</p>
+      <p>Developed by <strong>Hrithik Agarwal</strong>.</p>
+      <p>Connect with me:</p>
+      <p>
+        <a href="https://linkedin.com/in/hrithikagarwal" target="_blank">LinkedIn</a> |
+        <a href="https://github.com/hrithik-infinite" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
+    `,
+  });
+};

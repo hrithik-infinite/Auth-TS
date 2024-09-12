@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
 import { getUserById } from "./data/user";
 import { User, UserRole } from "@prisma/client";
+import { get2faConfmByUserId } from "./data/2fa-confirmation";
 
 declare module "next-auth" {
   interface Session {
@@ -31,7 +32,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (account?.provider !== "credentials") return true;
       const existingUser = await getUserById(_user.id);
       if (!existingUser || !existingUser.emailVerified) return false;
-      //TODO Add 2fa Check
+      if (existingUser.isTwoFactorEnabled) {
+        const _2faConfirmation = await get2faConfmByUserId(existingUser.id);
+        if (!_2faConfirmation) {
+          return false;
+        }
+        await db.twoFactorConfirmation.delete({
+          where: { id: _2faConfirmation.id },
+        });
+      }
       return true;
     },
     async session({ token, session }) {

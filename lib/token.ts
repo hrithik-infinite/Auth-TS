@@ -2,7 +2,29 @@ import { getVerificationTokenByEmail } from "@/data/verification-token";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { getPasswordResetTokenByEmail } from "@/data/password-reset-token";
+import crypto from "crypto";
+import { get2faTokenbyEmail } from "@/data/2fa-token";
 
+export const generatefaToken = async (email: string) => {
+  const token = crypto.randomInt(100000, 1000000);
+  const expires = new Date(new Date().getTime() + 3600 * 1000);
+  const isExisting = await get2faTokenbyEmail(email);
+  if (isExisting) {
+    await db.twoFactorToken.delete({
+      where: {
+        id: isExisting.id,
+      },
+    });
+  }
+  const _2faToken = await db.twoFactorToken.create({
+    data: {
+      email,
+      token: String(token),
+      expires,
+    },
+  });
+  return _2faToken;
+};
 export const generateVerificationToken = async (email: string) => {
   const token = uuidv4();
   const expires = new Date(new Date().getTime() + 3600 * 1000);
