@@ -11,7 +11,8 @@ interface LoginButtonProps {
 export const LoginButton = ({ children, mode, asChild }: LoginButtonProps) => {
   const router = useRouter();
 
-  const onClick = () => {
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     console.log("Login Button Clicked");
     router.push("/auth/login");
   };
