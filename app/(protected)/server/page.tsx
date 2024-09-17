@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 
 const ServerPage = async () => {
   const session = await auth();
-  const user = session?.user as User;
+  const user = session?.user as unknown as User;
   return (
     <div>
       <UserInfo label="Server Component" user={user} />

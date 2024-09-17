@@ -8,7 +8,7 @@ interface LoginButtonProps {
   mode?: "modal" | "redirect";
   asChild?: boolean;
 }
-export const LoginButton = ({ children, mode, asChild }: LoginButtonProps) => {
+export const LoginButton = ({ children, mode }: LoginButtonProps) => {
   const router = useRouter();
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
