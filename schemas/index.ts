@@ -43,16 +43,19 @@ export const SettingsSchema = z
   })
   .refine(
     (data) => {
-      if (data.password && !data.newPassword) {
-        return false;
-      }
-      if (data.newPassword && !data.password) {
-        return false;
-      }
-      return true;
+      return !data.password || data.newPassword;
     },
     {
-      message: "New password is required!",
+      message: "New password is required when changing the password.",
       path: ["newPassword"],
+    }
+  )
+  .refine(
+    (data) => {
+      return !data.newPassword || data.password;
+    },
+    {
+      message: "Current password is required to set a new password.",
+      path: ["password"],
     }
   );
