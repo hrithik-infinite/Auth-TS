@@ -1,11 +1,11 @@
 import { LoginForm } from "@/components/auth/login-form";
-import React from "react";
+import React, { Suspense } from "react";
 
 const LoginPage = () => {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <LoginForm />
-    </div>
+    </Suspense>
   );
 };
 
