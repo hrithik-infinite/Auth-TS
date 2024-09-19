@@ -32,7 +32,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     }
 
     const verifToken = await generate2faToken(values.email);
-    await sendVerificationEmail("hrithikinfinite@gmail.com", verifToken.token, existingUser?.name ? existingUser?.name : "");
+    await sendVerificationEmail(verifToken.email, verifToken.token, existingUser?.name ? existingUser?.name : "");
     return { success: "Verification email sent!" };
   }
 

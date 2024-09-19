@@ -16,6 +16,6 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
     return { error: "Email not found!" };
   }
   const token = await generatePasswordResetToken(email);
-  await sendResetLinkEmail("hrithikinfinite@gmail.com", token.token, exitingUser?.name);
+  await sendResetLinkEmail(token.email, token.token, exitingUser?.name);
   return { success: "Reset email sent!" };
 };

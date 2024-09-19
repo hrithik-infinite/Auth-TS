@@ -5,7 +5,7 @@ export const sendVerificationEmail = async (email: string, token: string, name: 
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
-    from: "Auth Ts <onboarding@resend.dev>",
+    from: "Auth TS <onboarding@hrithik.shop>",
     to: email,
     subject: "Welcome to Auth TS! Activate Your Account Now",
     html: `
@@ -105,7 +105,7 @@ export const sendVerificationEmail = async (email: string, token: string, name: 
 export const sendResetLinkEmail = async (email: string, token: string, name: string | null) => {
   const resetLink = `${domain}/auth/new-password?token=${token}`;
   await resend.emails.send({
-    from: "Auth TS <support@resend.dev>",
+    from: "Auth TS <support@hrithik.shop>",
     to: email,
     subject: "Reset Your Password - Auth TS",
     html: `
@@ -203,7 +203,7 @@ export const sendResetLinkEmail = async (email: string, token: string, name: str
 
 export const send2faEmail = async (email: string, token: string, name: string | null) => {
   await resend.emails.send({
-    from: "Auth TS <security@resend.dev>",
+    from: "Auth TS <security@hrithik.shop>",
     to: email,
     subject: "Your Auth TS OTP Code",
     html: `

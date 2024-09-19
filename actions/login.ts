@@ -23,7 +23,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
   if (!isExisiting.emailVerified) {
     const verificationToken = await generateVerificationToken(isExisiting.email);
-    await sendVerificationEmail("hrithikinfinite@gmail.com", verificationToken.token, isExisiting?.name ? isExisiting?.name : "");
+    await sendVerificationEmail(verificationToken.email, verificationToken.token, isExisiting?.name ? isExisiting?.name : "");
     return { success: "Confirmation email sent" };
   }
   if (isExisiting.isTwoFactorEnabled) {
@@ -59,7 +59,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     } else {
       const _2faToken = await generate2faToken(isExisiting.email);
       // await send2faEmail(_2faToken.email, _2faToken.token, isExisiting.name);
-      await send2faEmail("hrithikinfinite@gmail.com", _2faToken.token, isExisiting.name);
+      await send2faEmail("hrithikagarwal1012@gmail.com", _2faToken.token, isExisiting.name);
 
       return { twoFactor: true };
     }
