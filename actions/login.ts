@@ -59,7 +59,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     } else {
       const _2faToken = await generate2faToken(isExisiting.email);
       // await send2faEmail(_2faToken.email, _2faToken.token, isExisiting.name);
-      await send2faEmail("hrithikagarwal1012@gmail.com", _2faToken.token, isExisiting.name);
+      await send2faEmail(_2faToken.email, _2faToken.token, isExisiting.name);
 
       return { twoFactor: true };
     }
